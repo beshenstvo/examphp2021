@@ -4,6 +4,16 @@
     if(empty($_SESSION['user'])){
         header('Location: login.php');
     }
+    if(!empty($_GET['idfordelete'])){
+        $conn = new mysqli('localhost', 'root', 'root','exam') or die ('Невозможно открыть базу');
+        $deleteId = intval($_GET['idfordelete']);
+        $sql = "DELETE FROM `forms` WHERE id = $deleteId";
+        if (mysqli_query($conn, $sql)) {
+            echo "<script> alert('Форма удалена!')</script>";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +98,7 @@
               </div>
               <div class="row">
                 <h4>Списки созданных форм(сессий)</h4>
+                
                 <?php 
                     $conn = new mysqli('localhost', 'root', 'root','exam') or die ('Невозможно открыть базу');
                     $sql = "SELECT * FROM `forms`";
@@ -101,7 +112,6 @@
                         <th scope="col"></th>
                         </tr>
                     </thead>';
-                    //<a href="/?formlink='.$link.'"> '."http://".$_SERVER["HTTP_HOST"].$link.'</a>
                     while ($row = $result->fetch_assoc())
                     {
                         echo "<tr>";
@@ -109,7 +119,7 @@
                                 <th scope='row'>".$row['id']."</th> 
                                 <td>".$row['name']."</td>
                                 <td><a href='/?formlink=.$link.'>".'http://'.$_SERVER['HTTP_HOST'].$row['link']."</td>
-                                <td style='display: flex; justify-content: flex-end;'><button class='btn btn-outline-success' style='margin-right: 20px;'>Изменить</button><button class='btn btn-outline-danger'>Удалить</button></td>";
+                                <td style='display: flex; justify-content: flex-end;'><form action='GET'><button class='btn btn-outline-success' style='margin-right: 20px;'>Изменить</button><button class='btn btn-outline-danger' ><a href='/?idfordelete=".$row["id"]."'>Удалить</button></form></td>";
                             echo "</tr>";
                     }
                     echo "</table>";

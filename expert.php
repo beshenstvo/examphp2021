@@ -32,6 +32,59 @@
     if(isset($_POST['endCreate'])){
         header('Location: index.php');
     }
+    $checkType1 = 0; // относится к 1 типу вопроса 
+    for($i = 1; $i < 100; $i++){
+        if(!empty($_POST['guestion'.$i.''])){
+            $checkType1++;
+        }else{
+            break;
+        }
+    }
+    $checkType2 = 0; // относится к 2 типу вопроса 
+    for($i = 1; $i < 100; $i++){
+        if(!empty($_POST['guestionplus'.$i.''])){
+            $checkType2++;
+        }else{
+            break;
+        }
+    }
+    $checkType3 = 0; // относится к 3 типу вопроса 
+    for($i = 1; $i < 100; $i++){
+        if(!empty($_POST['guestionstr'.$i.''])){
+            $checkType3++;
+        }else{
+            break;
+        }
+    }
+    $checkType4 = 0; // относится к 4 типу вопроса 
+    for($i = 1; $i < 100; $i++){
+        if(!empty($_POST['guestiontext'.$i.''])){
+            $checkType4++;
+        }else{
+            break;
+        }
+    }
+    for($i = 1; $i < $checkType1; $i++){ // относится к 1 типу вопроса 
+        if( (!empty($_POST['guestion'.$i.''])) &&  (!empty($_POST['answer'.$i.''])) && (!empty($_POST['score'.$i.''])) ){
+            $conn = mysqli_connect('localhost', 'root', 'root','exam');
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            $the_guestion = $_POST['guestion'.$i.''];
+            $the_answer = $_POST['answer'.$i.''];
+            $the_score = $_POST['score'.$i.''];
+            $the_id_link = $link;
+            $sql = "INSERT INTO `guestions`(`id_link`,`guestion`, `answer`, `score`) VALUES ( '$the_id_link','$the_guestion', '$the_answer', '$the_score')";  
+            if (mysqli_query($conn, $sql)) {
+                echo "<script> alert('Вопросы для формы созданы!')</script>";
+            } else {
+               echo "<script> alert('Error: ". $sql . " " . mysqli_error($conn)."')</script>";
+            }
+        }else{
+            echo '<script>alert("Запоните все поля!")</script>';
+        }
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
