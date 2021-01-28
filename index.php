@@ -9,10 +9,12 @@
         $deleteId = intval($_GET['idfordelete']);
         $sql = "DELETE FROM `forms` WHERE id = $deleteId";
         if (mysqli_query($conn, $sql)) {
-            echo "<script> alert('Форма удалена!')</script>";
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
         }
+    }
+    if(!empty($_GET['formlink'])){
+        header('Location: form.php/?formlink='.$_GET['formlink'].'');
     }
 ?>
 <!DOCTYPE html>
@@ -32,8 +34,13 @@
   crossorigin="anonymous"></script>
     <title>Гатауллина Руфина 191-322</title>
     <style>
-    a:hover{
+    .a:hover{
         cursor:pointer;
+        text-decoration: none;
+        color:white;
+    }
+    .a{
+        color: #dc3545;
     }
     </style>
 </head>
@@ -118,8 +125,8 @@
                                 for ($j = 0 ; $j < 1 ; ++$j) echo "   
                                 <th scope='row'>".$row['id']."</th> 
                                 <td>".$row['name']."</td>
-                                <td><a href='/?formlink=.$link.'>".'http://'.$_SERVER['HTTP_HOST'].$row['link']."</td>
-                                <td style='display: flex; justify-content: flex-end;'><form action='GET'><button class='btn btn-outline-success' style='margin-right: 20px;'>Изменить</button><button class='btn btn-outline-danger' ><a href='/?idfordelete=".$row["id"]."'>Удалить</button></form></td>";
+                                <td><a href='/?formlink=".$row['link']."'>".'http://'.$_SERVER['HTTP_HOST'].$row['link']."</a></td>
+                                <td style='display: flex; justify-content: flex-end;'><form action='GET'><button class='btn btn-outline-success' style='margin-right: 20px;'>Изменить</button><button class='btn btn-outline-danger' ><a class='a' href='/?idfordelete=".$row["id"]."'>Удалить</button></form></td>";
                             echo "</tr>";
                     }
                     echo "</table>";

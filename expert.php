@@ -13,8 +13,12 @@
         return $idform;
         $flag = false;
     }
+    $link = '';
     if (isset($_POST['create'])){
+        global $link;
         $link = createForm();
+        $_SESSION['link'] = $link;
+        echo $_SESSION['link'];
         print_r($array_global);
          $conn = mysqli_connect('localhost', 'root', 'root','exam');
          if (!$conn) {
@@ -64,7 +68,7 @@
             break;
         }
     }
-    for($i = 1; $i < $checkType1; $i++){ // относится к 1 типу вопроса 
+    for($i = 1; $i < $checkType1+1; $i++){ // относится к 1 типу вопроса 
         if( (!empty($_POST['guestion'.$i.''])) &&  (!empty($_POST['answer'.$i.''])) && (!empty($_POST['score'.$i.''])) ){
             $conn = mysqli_connect('localhost', 'root', 'root','exam');
             if (!$conn) {
@@ -72,9 +76,73 @@
             }
             $the_guestion = $_POST['guestion'.$i.''];
             $the_answer = $_POST['answer'.$i.''];
-            $the_score = $_POST['score'.$i.''];
-            $the_id_link = $link;
-            $sql = "INSERT INTO `guestions`(`id_link`,`guestion`, `answer`, `score`) VALUES ( '$the_id_link','$the_guestion', '$the_answer', '$the_score')";  
+            $the_score = intval($_POST['score'.$i.'']);
+            $the_id_link = $_SESSION['link'];
+            $sql = "INSERT INTO `questions`(`id_link`,`question`, `answer`, `score`) VALUES ( '$the_id_link','$the_guestion', '$the_answer', $the_score)";  
+            $checkType1 = 0;
+            if (mysqli_query($conn, $sql)) {
+                echo "<script> alert('Вопросы для формы созданы!')</script>";
+            } else {
+               echo "<script> alert('Error: ". $sql . " " . mysqli_error($conn)."')</script>";
+            }
+        }else{
+            echo '<script>alert("Запоните все поля!")</script>';
+        }
+    }
+    for($i = 1; $i < $checkType2+1; $i++){ // относится к 1 типу вопроса 
+        if( (!empty($_POST['guestionplus'.$i.''])) &&  (!empty($_POST['answerplus'.$i.''])) && (!empty($_POST['scoreplus'.$i.''])) ){
+            $conn = mysqli_connect('localhost', 'root', 'root','exam');
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            $the_guestion = $_POST['guestionplus'.$i.''];
+            $the_answer = $_POST['answerplus'.$i.''];
+            $the_score = intval($_POST['scoreplus'.$i.'']);
+            $the_id_link = $_SESSION['link'];
+            $sql = "INSERT INTO `questions`(`id_link`,`question`, `answer`, `score`) VALUES ( '$the_id_link','$the_guestion', '$the_answer', $the_score)";  
+            $checkType1 = 0;
+            if (mysqli_query($conn, $sql)) {
+                echo "<script> alert('Вопросы для формы созданы!')</script>";
+            } else {
+               echo "<script> alert('Error: ". $sql . " " . mysqli_error($conn)."')</script>";
+            }
+        }else{
+            echo '<script>alert("Запоните все поля!")</script>';
+        }
+    }
+    for($i = 1; $i < $checkType3+1; $i++){ // относится к 1 типу вопроса 
+        if( (!empty($_POST['guestionstr'.$i.''])) &&  (!empty($_POST['answerstr'.$i.''])) && (!empty($_POST['scorestr'.$i.''])) ){
+            $conn = mysqli_connect('localhost', 'root', 'root','exam');
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            $the_guestion = $_POST['guestionstr'.$i.''];
+            $the_answer = $_POST['answerstr'.$i.''];
+            $the_score = intval($_POST['scorestr'.$i.'']);
+            $the_id_link = $_SESSION['link'];
+            $sql = "INSERT INTO `questions`(`id_link`,`question`, `answer`, `score`) VALUES ( '$the_id_link','$the_guestion', '$the_answer', $the_score)";  
+            $checkType1 = 0;
+            if (mysqli_query($conn, $sql)) {
+                echo "<script> alert('Вопросы для формы созданы!')</script>";
+            } else {
+               echo "<script> alert('Error: ". $sql . " " . mysqli_error($conn)."')</script>";
+            }
+        }else{
+            echo '<script>alert("Запоните все поля!")</script>';
+        }
+    }
+    for($i = 1; $i < $checkType4+1; $i++){ // относится к 1 типу вопроса 
+        if( (!empty($_POST['guestiontext'.$i.''])) &&  (!empty($_POST['answertext'.$i.''])) && (!empty($_POST['scoretext'.$i.''])) ){
+            $conn = mysqli_connect('localhost', 'root', 'root','exam');
+            if (!$conn) {
+                die("Connection failed: " . mysqli_connect_error());
+            }
+            $the_guestion = $_POST['guestiontext'.$i.''];
+            $the_answer = $_POST['answertext'.$i.''];
+            $the_score = intval($_POST['scoretext'.$i.'']);
+            $the_id_link = $_SESSION['link'];
+            $sql = "INSERT INTO `questions`(`id_link`,`question`, `answer`, `score`) VALUES ( '$the_id_link','$the_guestion', '$the_answer', $the_score)";  
+            $checkType1 = 0;
             if (mysqli_query($conn, $sql)) {
                 echo "<script> alert('Вопросы для формы созданы!')</script>";
             } else {
