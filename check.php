@@ -45,52 +45,18 @@
     </header>
    <div class="container mt-4 mb-4">
     <div class="row">
-        <h4>Форма "<?php 
-        $conn = new mysqli('localhost', 'root', 'root','exam') or die ('Невозможно открыть базу');
-        $the_idlink = $_GET['formlink'];
-        // echo $the_idlink;
-        $sql = "SELECT `name` FROM `forms` WHERE link = '$the_idlink' ";
-        $result = $conn->query($sql); 
-        while ($row = $result->fetch_assoc())
-        {
-            echo $row['name'];
-        }
-        ?>"</h4>
-        
+        <h4>Проверка ответов.</h4>
     </div>
     <div class="row">
-    <?php 
-    // echo 'открытие соотв вопроса';
-    $conn = new mysqli('localhost', 'root', 'root','exam') or die ('Невозможно открыть базу');
-    $the_idlink = $_GET['formlink'];
-    // echo $the_idlink;
-    $sql = "SELECT question FROM questions WHERE id_link = '$the_idlink' ";
-    $result = $conn->query($sql); 
-    $count = 1;
-    $countforanswer = 1;
-    echo '<form method="post" action="../check.php/?'.$_GET['formlink'].' " > 
-            <div class="modal-body">';
-        while ($row = $result->fetch_assoc())
-        {
-            echo ' <div class="form-group">
-                <label for="exampleInputEmail'.$countforanswer.'">Вопрос '.$count.': '.$row['question'].'</label>
-                <input type="text" class="form-control" id="exampleInputEmail'.$countforanswer.'" name="answer'.$countforanswer.'" placeholder="ответ" required>
-                </div>
-                <hr>';
-            $count++;
-            $countforanswer++;
-        }
-    echo '</div>
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" name="answerButton">Ответить</button>
-    </div>';
-    if (mysqli_query($conn, $sql)) {
-       
-    } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    PS не успела сделать проверку формы
+    </div>
+    <?php
+    if(isset($_POST['back'])){
+        header('Location: ../index.php');
     }
-
     ?>
+    <div class="row">
+        <form method="POST"><button class="btn btn-outline-primary my-2 my-sm-0" type="submit" name='back'>На начальную страницу</button></form>
     </div>
    </div>
     <nav class="navbar fixed-bottom navbar-light bg-light">

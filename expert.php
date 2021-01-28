@@ -18,7 +18,7 @@
         global $link;
         $link = createForm();
         $_SESSION['link'] = $link;
-        echo $_SESSION['link'];
+        // echo $_SESSION['link'];
         print_r($array_global);
          $conn = mysqli_connect('localhost', 'root', 'root','exam');
          if (!$conn) {
